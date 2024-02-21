@@ -1,0 +1,62 @@
+{% extends 'base.html' %} {% block content %}
+<div class="card">
+  <div class="card-body">
+    <div class="container">
+      <img src="logo\openai.253x256.png" alt="Avatar" style="width: 100%" />
+      <p>Hello. How are you today?</p>
+      <span class="time-right">11:00</span>
+    </div>
+
+    <div class="container darker">
+      <img
+        src="/w3images/avatar_g2.jpg"
+        alt="Avatar"
+        class="right"
+        style="width: 100%"
+      />
+      <p>Hey! I'm fine. Thanks for asking!</p>
+      <span class="time-left">11:01</span>
+    </div>
+
+    <div class="container">
+      <img src="/w3images/bandmember.jpg" alt="Avatar" style="width: 100%" />
+      <p>Sweet! So, what do you wanna do today?</p>
+      <span class="time-right">11:02</span>
+    </div>
+
+    <div class="container darker">
+      <img
+        src="/w3images/avatar_g2.jpg"
+        alt="Avatar"
+        class="right"
+        style="width: 100%"
+      />
+      <p>Nah, I dunno. Play soccer.. or learn more coding perhaps?</p>
+      <span class="time-left">11:05</span>
+    </div>
+    <input
+      type="text"
+      class="chat-input-box"
+      placeholder="Type your message here"
+    />
+  </div>
+<div class="card-body">
+  <form action="/upload" method="post" enctype="multipart/form-data">
+    <label>Drag and drop PDF files here or click to upload</label>
+    <div id="drop-area">
+      <input type="file" name="file" id="id" accept=".pdf" />
+      <input type = "submit" value="Upload"/>   
+    </div>
+  </form>
+  <br />
+  <body>
+    {% for name in names %}
+    <div class="card">
+      <a href="{{ url_for('download', name = name) }}" class="btn btn-primary d-block">{{ name }}</a>
+    </div>
+    {% endfor %}       
+   </body> 
+</div> 
+  </div>
+</div>
+{% endblock %}
