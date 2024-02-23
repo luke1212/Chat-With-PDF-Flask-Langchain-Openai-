@@ -6,29 +6,35 @@
 />
 <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}" />
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="/">PDF ChatBot</a>
-  <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav">
-      <li class="nav-item {% if request.path == '/' %}active{% endif %}">
-        <a class="nav-link" href="{{ url_for('home') }}">Home</a>
-      </li>
-      <li
-        class="nav-item {% if request.path == '/chathistory' %}active{% endif %}"
-      >
-        <a class="nav-link" href="{{ url_for('chathistory') }}">Chat History</a>
-      </li>
-    </ul>
-  </div>
-</nav>
-<section class="content text-center">{% block content %}{% endblock %}</section>
-<br />
-<section class="footer fixed-bottom">
-  {% block footer %}{% endblock %}
-  <p>
-    &copy; 2024 Chat with pdf. Released under the
-    <a href="https://opensource.org/licenses/MIT" target="_blank"
-      >MIT License
-    </a>
-  </p>
-</section>
+<body style="display: contents">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="/">PDF ChatBot</a>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item {% if request.path == '/' %}active{% endif %}">
+          <a class="nav-link" href="{{ url_for('home') }}">Home</a>
+        </li>
+        <li
+          class="nav-item {% if request.path == '/chathistory' %}active{% endif %}"
+        >
+          <a class="nav-link" href="{{ url_for('chathistory') }}"
+            >Chat History</a
+          >
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <section class="content text-center">
+    {% block content %}{% endblock %}
+  </section>
+  <br />
+  <section class="footer fixed-bottom">
+    {% block footer %}{% endblock %}
+    <p>
+      &copy; 2024 Chat with pdf. Released under the
+      <a href="https://opensource.org/licenses/MIT" target="_blank"
+        >MIT License
+      </a>
+    </p>
+  </section>
+</body>
