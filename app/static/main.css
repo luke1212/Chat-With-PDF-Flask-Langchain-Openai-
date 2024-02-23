@@ -599,6 +599,7 @@ a.add img {
     display: block;
     width: 100%;
     position: relative;
+    text-align: left;
 }
 
 .msg-body ul li.sender:before {
@@ -827,7 +828,6 @@ li.repaly .time {
 }
 
 .send-btns .attach .form-control {
-    display: inline-block;
     width: 120px;
     height: auto;
     padding: 5px 8px;
@@ -840,6 +840,7 @@ li.repaly .time {
     border: 1px solid #F6F7FA;
     border-radius: 3px;
     margin-bottom: 5px;
+    float: left;
 }
 
 .send-btns .button-wrapper span.label img {
@@ -859,7 +860,7 @@ button:focus {
 }
 
 .add-apoint {
-    display: inline-block;
+    float:left;
     margin-left: 5px;
 }
 
