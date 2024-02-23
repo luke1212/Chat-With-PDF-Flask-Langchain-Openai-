@@ -1,12 +1,6 @@
 import os
-import shutil
 from flask_wtf import FlaskForm
 from wtforms import StringField
-
-class FileForm(FlaskForm):
-    name = StringField('File Name')
-    path = StringField('File Path')
-
 
 def get_pdf_names(directory):
     pdf_names = []
@@ -14,4 +8,10 @@ def get_pdf_names(directory):
         if filename.endswith(".pdf"):
             pdf_names.append(filename)
     return pdf_names
+
+def delete_file(file_path):
+    try:
+        os.remove(file_path)
+    except OSError as e:
+        print(f"Error deleting file {file_path}: {e}")
 

@@ -8,8 +8,12 @@ from langchain_community.document_loaders import PDFMinerPDFasHTMLLoader, Unstru
 from langchain_openai import ChatOpenAI
 from langchain.prompts import ChatPromptTemplate
 from nltk.tokenize import sent_tokenize
+from werkzeug.utils import secure_filename
 
 from dotenv import load_dotenv, find_dotenv
+
+doc_path = os.path.join('../instance', 'docs')
+md_path = os.path.join('../instance', 'md')
 
 # read local .env file
 _ = load_dotenv(find_dotenv()) 
@@ -107,8 +111,9 @@ def merge_snippets(snippets, section_font_size):
 
 
 #Generate the markdown from the PDF
-def generate_markdown_from_pdf(): 
-    data = loadpdf_miner_html(r"..\database\pdfs\TaskWaver.pdf")
+def generate_markdown_from_pdf(filename): 
+
+    data = loadpdf_miner_html(os.path.join(doc_path, secure_filename(filename)))
     snippets = parse_html_to_snippnets(data)
     font_dict = calculate_font_statistics(snippets)
 
@@ -131,7 +136,13 @@ def generate_markdown_from_pdf():
             sentences[i] = sentences[i].replace('\n', ' ')
 
     # save the text into a markdown file
-    with open(r"..\database\markdowns\TaskWaver.md", "w",encoding='utf-8') as f:
+    filename_md = os.path.splitext(filename)[0] + ".md"
+    
+    # create the markdown folder if not exists
+    if not os.path.exists(md_path):
+        os.makedirs(md_path)
+        
+    with open(os.path.join(md_path, secure_filename(filename_md)), "w", encoding='utf-8') as f:
         for key in section_text:
             f.write(f"# {key}\n")
             for sentence in section_text[key]['sentences']:
@@ -145,7 +156,7 @@ def load_markdown_file(file_path):
     return docs
     
 # OpenAI Chat Completion
-def get_summary(document_path, model=llm_model):
+def get_summary(document_path):
     docs = load_markdown_file(document_path)
     template_string = """summarize the following sections of the paper:\
         text: ```{text}```
@@ -155,9 +166,12 @@ def get_summary(document_path, model=llm_model):
     prompt = prompt_template.format_messages(text = docs[3].page_content)
     return chat.invoke(prompt)
 
+def get_completion(message):
+    chat = ChatOpenAI(temperature=0.0, model=llm_model)
+    return chat.invoke(message)
 
-
-if __name__ == "__main__": 
-    r = get_summary(r"..\database\markdowns\TaskWaver.md")
-    print(r)
+#For testing and debugging
+# if __name__ == "__main__": 
+#     r = get_completion("hi what is your name")
+#     print(r.content)
     

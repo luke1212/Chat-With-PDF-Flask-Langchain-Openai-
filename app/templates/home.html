@@ -1,0 +1,95 @@
+{% extends 'base.html' %} {% block content %}
+<div class="card">
+  <div class="card-body chat">
+    <form id="messageArea" class="input-group">
+      <textarea
+        type="text"
+        id="userTextInput"
+        name="msg"
+        placeholder="Type your message..."
+        autocomplete="off"
+        class="form-control type_msg"
+        style="width: 100%"
+        required
+      ></textarea>
+      <div class="input-group-append">
+        <button type="submit" id="send" class="input-group-text send_btn">
+          <i class="fas fa-location-arrow"></i>
+        </button>
+      </div>
+    </form>
+    <script>
+      $(document).ready(function () {
+        $("#messageArea").on("submit", function (event) {
+          const date = new Date();
+          const hour = date.getHours();
+          const minute = date.getMinutes();
+          const str_time = hour + ":" + minute;
+          var rawText = $("#userTextInput").val();
+
+          var userHtml =
+            '<div class="d-flex justify-content-end mb-4"><div class="msg_cotainer_send">' +
+            rawText +
+            '<span class="msg_time_send">' +
+            str_time +
+            '</span></div><div class="img_cont_msg"><img src="https://i.ibb.co/d5b84Xw/Untitled-design.png" class="rounded-circle user_img_msg"></div></div>';
+
+          $("#userTextInput").val("");
+          $("#messageFormeight").append(userHtml);
+
+          $.ajax({
+            data: {
+              msg: rawText,
+            },
+            type: "POST",
+            url: "/get",
+          }).done(function (data) {
+            var botHtml =
+              '<div class="d-flex justify-content-start mb-4"><div class="img_cont_msg"><img src="https://i.ibb.co/fSNP7Rz/icons8-chatgpt-512.png" class="rounded-circle user_img_msg"></div><div class="msg_cotainer">' +
+              data +
+              '<span class="msg_time">' +
+              str_time +
+              "</span></div></div>";
+            $("#messageFormeight").append($.parseHTML(botHtml));
+          });
+          event.preventDefault();
+        });
+      });
+    </script>
+    <div class="card-body">
+      <form action="/upload" method="post" enctype="multipart/form-data">
+        <label>Drag and drop PDF files here or click to upload</label>
+        <div id="drop-area">
+          <input type="file" name="file" id="id" accept=".pdf" />
+          <input type="submit" value="Upload" />
+        </div>
+      </form>
+      <br />
+      <body>
+        {% for name in names %}
+        <div class="card">
+          <div
+            class="horizontal-links"
+            style="display: flex; justify-content: flex-end"
+          >
+            <p>{{ name }}</p>
+            <div style="margin-left: auto">
+              <a
+                href="{{ url_for('delete', name = name) }}"
+                class="btn btn-primary"
+                >Delete</a
+              >
+              <a
+                href="{{ url_for('download', name = name) }}"
+                class="btn btn-primary"
+                >Download</a
+              >
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </body>
+    </div>
+  </div>
+  {% endblock %}
+</div>
