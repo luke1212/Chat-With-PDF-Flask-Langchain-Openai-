@@ -22,6 +22,7 @@ def home():
 @app.route('/upload', methods = ['POST'])   
 def upload():
     try:   
+        print("Uploading file")
         if request.method == 'POST' and 'file' in request.files:
             f = request.files['file']
             
@@ -46,8 +47,7 @@ def upload():
 @app.route('/download/<name>', methods=['GET', 'POST'])
 def download(name):
     try: 
-        path = os.path.join(doc_path, secure_filename(name))
-        return send_from_directory('pdfs', name, as_attachment=True)
+        return send_from_directory(doc_path, name, as_attachment=True)
     except Exception as e:        
         print(f"Error: {str(e)}")
         abort(404)   
