@@ -973,3 +973,7 @@ i.fa {
     float: left;
     max-width: 100%;
 }
+
+#file-display:hover{
+    background: #ecebeb;
+}

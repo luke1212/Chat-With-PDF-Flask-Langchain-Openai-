@@ -20,9 +20,8 @@ def home():
         
 
 @app.route('/upload', methods = ['POST'])   
-def upload():
+def upload_files():
     try:   
-        print("Uploading file")
         if request.method == 'POST' and 'file' in request.files:
             f = request.files['file']
             
@@ -76,6 +75,15 @@ def get_bot_response():
     userText = request.form["msg"]
     response = open_ai.get_completion(userText)  
     return response.content
+
+@app.route('/selected_file/<name>', methods=['GET', 'POST'])
+def selected_file(name):
+    try:
+        f_names = file_server.get_pdf_names(doc_path)
+        return render_template('home.html', selected_file_name = name, names = f_names)
+    except Exception as e:
+        print(f"Error: {str(e)}")
+        abort(404)
         
 if __name__ == "__main__":
     app.run(debug=True)
