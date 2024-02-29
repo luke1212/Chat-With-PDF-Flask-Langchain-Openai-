@@ -37,7 +37,6 @@ def upload_files():
             file_path = os.path.join(doc_path, secure_filename(f.filename))
             f.save(file_path)
             file_names = file_server.get_pdf_names(doc_path)
-            
             return render_template("home.html", names = file_names)
     except Exception as e:        
         print(f"Error: {str(e)}")
@@ -71,10 +70,10 @@ def chathistory():
         abort(404)   
 
 @app.route("/get", methods=["GET", "POST"])
-def get_bot_response():    
+def get_bot_response():
     userText = request.form["msg"]
-    response = open_ai.get_completion(userText)  
-    return response.content
+    response = open_ai.get_pdf_info(userText, request.form["file_name"]) 
+    return response
 
 @app.route('/selected_file/<name>', methods=['GET', 'POST'])
 def selected_file(name):

@@ -5,3 +5,4 @@ __pycache__/openai.cpython-312.pyc
 api/__pycache__/file_server.cpython-312.pyc
 instance/
 .__pycache__
+*.pyc

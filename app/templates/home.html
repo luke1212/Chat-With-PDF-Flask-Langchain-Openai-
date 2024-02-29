@@ -109,8 +109,7 @@
                                                         <img class="image-size" src="https://upload.wikimedia.org/wikipedia/commons/8/87/PDF_file_icon.svg" alt="user img">
                                                     </div>
                                                     <div class="flex-grow-1 ms-3">
-                                                        <h3>{{selected_file_name}}</h3>
-                                                        <p>front end developer</p>
+                                                        <h3 id = 'selected_file_name'>{{selected_file_name}}</h3>
                                                     </div>
                                                 </div>
                                             </div>
@@ -138,7 +137,6 @@
                                             <ul id="messageFormeight">        
                                                 <li class="sender">
                                                     <p>Hi I am your Ai PDF assistant upload&choose a pdf file to start 🤖 </p>
-                                                    <span class="time">10:20 am</span>
                                                 </li>
                                             </ul>
                                         </div>
@@ -197,6 +195,7 @@
         const minute = date.getMinutes();
         const str_time = hour + ":" + minute;
         var rawText = $("#userTextInput").val();
+        var selected_file_name = $("#selected_file_name").text();
 
         var userHtml =
         '<li class="repaly"> <p>' + rawText + '</p> <span class="time">'+ str_time +'</span> </li>';
@@ -206,7 +205,8 @@
 
         $.ajax({
                     data: {
-                        msg: rawText,	
+                        msg: rawText,
+                        file_name: selected_file_name	
                     },
                     type: "POST",
                     url: "/get",
