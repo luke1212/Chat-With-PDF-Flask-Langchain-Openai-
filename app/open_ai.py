@@ -170,33 +170,9 @@ def get_summary(document_path):
 def get_completion(message):
     chat = ChatOpenAI(temperature=0.0, model=llm_model)
     return chat.invoke(message)
-
-def get_pdf_info(message, filename):
-    v = file_server.embed_doc(doc_path)
-    question = message
-    source = os.path.join(doc_path, filename)
-    docs = v.similarity_search(
-        question,
-        k=3,
-        filter = {"source": source}
-        )
-    return docs[0].page_content
-    
-
+  
 #For testing and debugging
 # if __name__ == "__main__": 
-# #     r = get_completion("hi what is your name")
-# #     print(r.content)
-#     v = file_server.embed_doc(doc_path)
-#     filename = "TaskWaver.pdf"
-#     source = os.path.join("instance/docs", filename)
-#     print(source)
-#     # print(v._collection.count())
-#     question = "who is the author of this paper?"
-#     docs = v.similarity_search(
-#         question,
-#         k=3,
-#         filter = {"source": source}
-#         )
-    # print(docs[0].page_content)
+#     r = get_completion("hi what is your name")
+#     print(r.content)
 

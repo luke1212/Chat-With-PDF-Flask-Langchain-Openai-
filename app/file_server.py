@@ -66,4 +66,5 @@ def delete_file(file_path):
 #         filter = {"source": source}
 #         )
 #     print(docs[0].page_content)
+#     print(docs.metadata)
     

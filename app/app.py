@@ -1,6 +1,6 @@
 from flask import *
+import data_retrieval as retriever
 import file_server
-import open_ai
 from werkzeug.utils import secure_filename
 import os
 
@@ -72,7 +72,7 @@ def chathistory():
 @app.route("/get", methods=["GET", "POST"])
 def get_bot_response():
     userText = request.form["msg"]
-    response = open_ai.get_pdf_info(userText, request.form["file_name"]) 
+    response = retriever.data_max_marginal_relevance_search(userText, request.form["file_name"]) 
     return response
 
 @app.route('/selected_file/<name>', methods=['GET', 'POST'])
