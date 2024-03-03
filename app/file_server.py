@@ -1,5 +1,5 @@
 import os
-from langchain_community.vectorstores import Chroma
+from langchain_community.vectorstores import Chroma, FAISS
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_openai import OpenAIEmbeddings
 from langchain_community.document_loaders import PyPDFLoader, UnstructuredMarkdownLoader
@@ -24,6 +24,14 @@ def text_splitter(docs):
         chunk_overlap = 150
     )
     return text_splitter.split_documents(docs)
+
+def embed_single_doc(filename):
+    file = load_pdf(os.path.join("instance/docs", filename))
+    splits = text_splitter(file)
+    return FAISS.from_documents(
+        documents=splits,
+        embedding=OpenAIEmbeddings()
+    )
 
 def embed_doc(path):
     embedding = OpenAIEmbeddings()
