@@ -54,7 +54,7 @@ def download(name):
 @app.route('/delete/<name>', methods=['GET', 'POST'])
 def delete(name):
     try: 
-        path = os.path.join(doc_path, secure_filename(name))
+        path = os.path.join(doc_path, name)
         file_server.delete_file(path)
         f_names = file_server.get_pdf_names(doc_path)
         return render_template("home.html", names = f_names)
@@ -72,6 +72,10 @@ def chathistory():
 
 @app.route("/get", methods=["GET", "POST"])
 def get_bot_response():
+    if file_server.get_pdf_names(doc_path) == []:
+        return "Please upload a file"
+    if request.form['file_name'] == "": 
+        return "Please select a file"
     userText = request.form["msg"]
     response = chat.create_conversational_memory_agent(userText, request.form["file_name"]) 
     return response['answer']
