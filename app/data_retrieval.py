@@ -6,14 +6,14 @@ from langchain.chains.query_constructor.base import AttributeInfo
 from langchain.retrievers import ContextualCompressionRetriever
 from langchain.retrievers.document_compressors import LLMChainExtractor
 
-doc_path = os.path.join("instance", "docs")
-llm = OpenAI(model='gpt-3.5-turbo-instruct', temperature=0)
+_doc_path = os.path.join("instance", "docs")
+_llm = OpenAI(model='gpt-3.5-turbo-instruct', temperature=0)
 
 # Define the target information
 def get_file_info(message, filename):
-    v = file_server.embed_doc(doc_path)
+    v = file_server.embed_doc(_doc_path)
     question = message
-    source = os.path.join(doc_path, filename)
+    source = os.path.join(_doc_path, filename)
     return v, question, source
 
 def pretty_print_docs(docs):
@@ -37,8 +37,8 @@ def data_max_marginal_relevance_search(message, filename):
         )
     return docs
 
-def data_self_query_retriever(message, filename):
-    vectordb, question, source = get_file_info(message, filename)
+def data_self_query_retriever(filename):
+    vectordb, question, source = get_file_info("", filename)
     metadata_field_info = [
         AttributeInfo(
             name="source",
@@ -53,28 +53,26 @@ def data_self_query_retriever(message, filename):
     ]
     document_content_description = "The content of the document."
     retriever = SelfQueryRetriever.from_llm(
-        llm,
+        _llm,
         vectordb,
         document_content_description,
         metadata_field_info,
-        verbose=True,
     )
-    return retriever.get_relevant_documents(question)
+    return retriever
 
-def data_contextual_compression_retriever(message, filename):
+def data_contextual_compression_retriever(filename):
     retriever = file_server.embed_single_doc(filename)
-    compressor = LLMChainExtractor.from_llm(llm)
+    compressor = LLMChainExtractor.from_llm(_llm)
     compression_retriever = ContextualCompressionRetriever(
         base_compressor=compressor,
         base_retriever=retriever.as_retriever()
     )
-    compressed_docs = compression_retriever.get_relevant_documents(message)
-    return compressed_docs
+    return compression_retriever
    
 
 
 if __name__ == "__main__": 
-    v = file_server.embed_doc(doc_path)
+    v = file_server.embed_doc(_doc_path)
     filename = "Study Plan.pdf"
     source = os.path.join("instance/docs", filename)
     # print(v._collection.count())

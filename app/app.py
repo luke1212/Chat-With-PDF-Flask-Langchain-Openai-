@@ -1,6 +1,7 @@
 from flask import *
 import data_retrieval as retriever
 import file_server
+import chat_open_ai as chat
 from werkzeug.utils import secure_filename
 import os
 
@@ -72,8 +73,8 @@ def chathistory():
 @app.route("/get", methods=["GET", "POST"])
 def get_bot_response():
     userText = request.form["msg"]
-    response = retriever.data_max_marginal_relevance_search(userText, request.form["file_name"]) 
-    return response
+    response = chat.create_conversational_memory_agent(userText, request.form["file_name"]) 
+    return response['answer']
 
 @app.route('/selected_file/<name>', methods=['GET', 'POST'])
 def selected_file(name):
