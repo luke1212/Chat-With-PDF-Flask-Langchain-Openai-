@@ -69,22 +69,20 @@ def data_contextual_compression_retriever(filename):
     )
     return compression_retriever
    
-
-
-if __name__ == "__main__": 
-    v = file_server.embed_doc(_doc_path)
-    filename = "Study Plan.pdf"
-    source = os.path.join("instance/docs", filename)
-    # print(v._collection.count())
-    question = "who is the author of this paper?"
-    docs = v.similarity_search(
-        question,
-        k=3,
-        filter = {"source": source}
-        )
-    # docs = data_self_query_retriever(question, filename)
-    # docs = data_max_marginal_relevance_search(question, filename)
-    docs = data_contextual_compression_retriever(question, filename)
-    # for doc in docs:
-    #     print(doc.metadata)
-    print(docs[0].page_content)
+# if __name__ == "__main__": 
+#     v = file_server.embed_doc(_doc_path)
+#     filename = "Study Plan.pdf"
+#     source = os.path.join("instance/docs", filename)
+#     # print(v._collection.count())
+#     question = "who is the author of this paper?"
+#     docs = v.similarity_search(
+#         question,
+#         k=3,
+#         filter = {"source": source}
+#         )
+#     # docs = data_self_query_retriever(question, filename)
+#     # docs = data_max_marginal_relevance_search(question, filename)
+#     docs = data_contextual_compression_retriever(question, filename)
+#     # for doc in docs:
+#     #     print(doc.metadata)
+#     print(docs[0].page_content)

@@ -97,5 +97,5 @@ def selected_file(name):
         print(f"Error: {str(e)}")
         abort(404)
         
-if __name__ == "__main__":
-    app.run(debug=True)
+# if __name__ == "__main__":
+#     app.run(debug=True)

@@ -111,7 +111,7 @@ def prompt_template_2(question):
     return prompt
   
 # For testing and debugging
-if __name__ == "__main__": 
-    r = create_conversational_memory_agent("what is the conclusion for this paper?", "TaskWaver.pdf")
-    print(r['answer'])
+# if __name__ == "__main__": 
+#     r = create_conversational_memory_agent("what is the conclusion for this paper?", "TaskWaver.pdf")
+#     print(r['answer'])
 

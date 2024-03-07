@@ -130,5 +130,5 @@ def merge_snippets(snippets, section_font_size):
     
     return section_text
 
-if __name__ == "__main__":
-    generate_markdown_from_pdf("TaskWaver.pdf")
+# if __name__ == "__main__":
+#     generate_markdown_from_pdf("TaskWaver.pdf")
