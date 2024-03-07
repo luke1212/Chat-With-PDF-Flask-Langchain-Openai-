@@ -21,6 +21,11 @@
             >Chat History</a
           >
         </li>
+        <li
+          class="nav-item {% if request.path == '/config' %}active{% endif %}"
+        >
+          <a class="nav-link" href="{{ url_for('config') }}">Config</a>
+        </li>
       </ul>
     </div>
   </nav>

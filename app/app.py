@@ -69,6 +69,14 @@ def chathistory():
     except Exception as e:
         print(f"Error: {str(e)}")
         abort(404)   
+        
+@app.route('/config', methods=['GET', 'POST'])
+def config():
+    try:
+        return render_template('config.html')
+    except Exception as e:
+        print(f"Error: {str(e)}")
+        abort(404)
 
 @app.route("/get", methods=["GET", "POST"])
 def get_bot_response():
