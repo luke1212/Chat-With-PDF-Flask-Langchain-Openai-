@@ -10,6 +10,7 @@ OPENAI_API_KEY = "Your API Key"
 ### Install requirements.txt
 Install everything listed in the `requirements.txt` file
 
+### Start
 ```bash
 flask run
 ```
