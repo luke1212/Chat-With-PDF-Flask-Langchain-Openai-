@@ -3,6 +3,10 @@
 ## Quick Start
 To set up your environment, you will need to generate a .env file that contains your OpenAI API key and download the necessary packages.
 
+```
+OPENAI_API_KEY = "Your API Key"
+```
+
 ### Install requirements.txt
 Install everything listed in the `requirements.txt` file
 
