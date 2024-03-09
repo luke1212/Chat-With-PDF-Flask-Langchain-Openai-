@@ -2,7 +2,7 @@
 
 ## Quick Start
 
-### Step 2. Install requirements.txt
+### Install requirements.txt
 Install everything listed in the `requirements.txt` file
 
 ```bash
