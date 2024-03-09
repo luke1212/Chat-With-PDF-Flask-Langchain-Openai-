@@ -1,6 +1,7 @@
 ![Screen](photo/Screen1.PNG)
 
 ## Quick Start
+To set up your environment, you will need to generate a .env file that contains your OpenAI API key and download the necessary packages.
 
 ### Install requirements.txt
 Install everything listed in the `requirements.txt` file
