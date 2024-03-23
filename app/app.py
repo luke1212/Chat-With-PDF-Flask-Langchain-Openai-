@@ -85,8 +85,8 @@ def get_bot_response():
     if request.form['file_name'] == "": 
         return "Please select a file"
     userText = request.form["msg"]
-    response = chat.create_conversational_memory_agent(userText, request.form["file_name"]) 
-    return response['answer']
+    response = chat.chat_agent_executor(userText) 
+    return response
 
 @app.route('/selected_file/<name>', methods=['GET', 'POST'])
 def selected_file(name):

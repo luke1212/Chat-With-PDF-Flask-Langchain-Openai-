@@ -1,10 +1,11 @@
 import file_server
 import os
-from langchain_openai import OpenAI
+from langchain_openai import OpenAI,ChatOpenAI
 from langchain.retrievers.self_query.base import SelfQueryRetriever
 from langchain.chains.query_constructor.base import AttributeInfo
 from langchain.retrievers import ContextualCompressionRetriever
 from langchain.retrievers.document_compressors import LLMChainExtractor
+from langchain.chains import RetrievalQA
 
 _doc_path = os.path.join("instance", "docs")
 _llm = OpenAI(model='gpt-3.5-turbo-instruct', temperature=0)
@@ -69,20 +70,35 @@ def data_contextual_compression_retriever(filename):
     )
     return compression_retriever
    
-# if __name__ == "__main__": 
-#     v = file_server.embed_doc(_doc_path)
-#     filename = "Study Plan.pdf"
-#     source = os.path.join("instance/docs", filename)
-#     # print(v._collection.count())
-#     question = "who is the author of this paper?"
-#     docs = v.similarity_search(
-#         question,
-#         k=3,
-#         filter = {"source": source}
-#         )
-#     # docs = data_self_query_retriever(question, filename)
-#     # docs = data_max_marginal_relevance_search(question, filename)
-#     docs = data_contextual_compression_retriever(question, filename)
-#     # for doc in docs:
-#     #     print(doc.metadata)
-#     print(docs[0].page_content)
+def retrieverQA(vectordb, prompt):
+    qa_chain = RetrievalQA.from_chain_type(
+        chat_open_ai_model(),
+        retriever=vectordb.as_retriever(),
+        chain_type="stuff",
+        return_source_documents=True,
+        chain_type_kwargs={"prompt": prompt}
+    )
+    return qa_chain
+
+def chat_open_ai_model():
+    llm = ChatOpenAI(temperature=0.0)
+    return llm
+
+if __name__ == "__main__": 
+    v = file_server.embed_doc(_doc_path)
+    filename = "TaskWaver.pdf"
+    source = os.path.join("instance/docs", filename)
+    # print(v._collection.count())
+    question = "who is the author of this paper?"
+    # docs = v.similarity_search(
+    #     question,
+    #     k=3,
+    #     filter = {"source": source}
+    #     )
+    # docs = data_self_query_retriever(question, filename)
+    # docs = data_max_marginal_relevance_search(question, filename)
+    # docs = data_contextual_compression_retriever(filename)
+    docs = data_similarity_search(question, filename)
+    # for doc in docs:
+    #     print(doc.metadata)
+    print(docs)
